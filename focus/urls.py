@@ -8,8 +8,9 @@ from .views import (
     FriendUpdate, FriendDestroy,
     UserAchievementList, UserAchievementCreate,
     UserAchievementRetrieve, UserAchievementUpdate,
-    UserAchievementDestroy,TotalTrackedTimeListCreateAPIView, 
-    TotalTrackedTimeRetrieveUpdateDestroyAPIView
+    UserAchievementDestroy,TotalTrackedTimeCreateAPIView, 
+    TotalTrackedTimeListAPIView, TotalTrackedTimeDestroyAPIView, TotalTrackedTimeRetrieveAPIView, 
+    TotalTrackedTimeUpdateAPIView
 )
 
 urlpatterns = [
@@ -42,6 +43,9 @@ urlpatterns = [
     path('user-achievements/<int:pk>/delete/', UserAchievementDestroy.as_view(), name='user-achievement-destroy'),
 
     # Total Tracked Time
-    path('total-tracked-time/', TotalTrackedTimeListCreateAPIView.as_view(), name='total-tracked-time-list-create'),
-    path('total-tracked-time/<int:pk>/', TotalTrackedTimeRetrieveUpdateDestroyAPIView.as_view(), name='total-tracked-time-detail'),
+    path('total-tracked-time/', TotalTrackedTimeListAPIView.as_view(), name='total-tracked-time-list'),
+    path('total-tracked-time/create/', TotalTrackedTimeCreateAPIView.as_view(), name='total-tracked-time-create'),
+    path('total-tracked-time/<int:pk>/', TotalTrackedTimeRetrieveAPIView.as_view(), name='total-tracked-time-detail'),
+    path('total-tracked-time/<int:pk>/', TotalTrackedTimeUpdateAPIView.as_view(), name='total-tracked-time-update'),
+    path('total-tracked-time/<int:pk>/', TotalTrackedTimeDestroyAPIView.as_view(), name='total-tracked-time-delete'),
 ]
