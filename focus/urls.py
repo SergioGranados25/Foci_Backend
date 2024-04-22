@@ -10,7 +10,7 @@ from .views import (
     UserAchievementRetrieve, UserAchievementUpdate,
     UserAchievementDestroy,TotalTrackedTimeCreateAPIView, 
     TotalTrackedTimeListAPIView, TotalTrackedTimeDestroyAPIView, TotalTrackedTimeRetrieveAPIView, 
-    TotalTrackedTimeUpdateAPIView
+    TotalTrackedTimeUpdateAPIView, CreateUserView,
 )
 
 urlpatterns = [
@@ -48,4 +48,7 @@ urlpatterns = [
     path('total-tracked-time/<int:pk>/', TotalTrackedTimeRetrieveAPIView.as_view(), name='total-tracked-time-detail'),
     path('total-tracked-time/<int:pk>/', TotalTrackedTimeUpdateAPIView.as_view(), name='total-tracked-time-update'),
     path('total-tracked-time/<int:pk>/', TotalTrackedTimeDestroyAPIView.as_view(), name='total-tracked-time-delete'),
+
+
+    path("user/register/", CreateUserView.as_view(), name="register"),
 ]
