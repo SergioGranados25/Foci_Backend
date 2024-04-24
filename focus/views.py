@@ -1,10 +1,9 @@
-from rest_framework import generics, status
+from rest_framework import generics, status, viewsets
 from .models import Achievement, FocusSession, Friend, UserAchievement, TotalTrackedTime
 from .serializers import AchievementSerializer, FocusSessionSerializer, FriendSerializer, UserAchievementSerializer, TotalTrackedTimeSerializer, UserSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth.models import User
 from rest_framework.response import Response
-
 from focus import serializers
 
 class AchievementList(generics.ListAPIView):
@@ -142,22 +141,27 @@ class CreateUserView(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
     def perform_create(self, serializer):
-        # Add any custom validation logic here
-        # For example, check if the username is unique
         if User.objects.filter(username=serializer.validated_data['username']).exists():
             raise serializers.ValidationError("Username already exists.")
         
-        # Save the new user object
+    
         serializer.save()
 
     def post(self, request, *args, **kwargs):
-        # Handle JSON file upload if necessary
-        # For example, you might want to parse the JSON file and pass the data to the serializer
-        # json_file = request.FILES.get('json_file')
-        # json_data = json.loads(json_file.read())
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+class UserListView(generics.ListAPIView):
+  queryset = User.objects.all()
+  serializer_class = UserSerializer
+  permission_classes = [AllowAny]
+
+
+class UserRetrieveView(generics.RetrieveAPIView):
+  queryset = User.objects.all()
+  serializer_class = UserSerializer
+  permission_classes = [AllowAny]
